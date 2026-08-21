@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "ObterDetalhesConta",
+    "RelativePath": "api/Conta/detalhes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "Sacar",
+    "RelativePath": "api/Conta/sacar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "valor",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

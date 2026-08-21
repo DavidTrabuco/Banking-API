@@ -1,0 +1,43 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BankingApi",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Conta/detalhes": {
+      "get": {
+        "tags": [
+          "Conta"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Conta/sacar": {
+      "post": {
+        "tags": [
+          "Conta"
+        ],
+        "parameters": [
+          {
+            "name": "valor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { }
+}
