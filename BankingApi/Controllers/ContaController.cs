@@ -2,7 +2,7 @@
 using BankingApi.Models;
 using BankingApi.DTO;
 using Microsoft.AspNetCore.Mvc;
-
+using BankingApi.Data;
 
 namespace BankingApi.Controllers
 {
@@ -11,12 +11,16 @@ namespace BankingApi.Controllers
     public class ContaController : Controller
     {
         private readonly INotificador _notificador;
+        private readonly BancoDbContext _context;
 
-        public ContaController(INotificador notificador)
+        
+        public ContaController(INotificador notificador, BancoDbContext context)
         {
             _notificador = notificador;
+            _context = context;
         }
 
+       
 
         [HttpGet("detalhes")]
         public IActionResult ObterDetalhesConta()
@@ -29,25 +33,22 @@ namespace BankingApi.Controllers
                 Saldo = conta.Saldo,
                 EnderecoCobranca = conta.EnderecoCobranca?.ObterEnderecoCompleto()
             });
-
-
         }
 
         [HttpPost("sacar")]
-        public IActionResult Sacar([FromQuery] decimal valor)
+        public IActionResult Sacar([FromBody] ValorDTO dto)
         {
             var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
             var conta = new ContaBancaria("João Silva", 1000m, endereco);
 
-            bool sucesso = conta.Sacar(valor);
+            bool sucesso = conta.Sacar(dto.Valor);
 
             if (!sucesso)
             {
                 return BadRequest(new { mensagem = "Saldo insuficiente para realizar o saque." });
             }
 
-            // Executa a notificação injetada via DI
-            _notificador.Notificar($"Saque de {valor:C} realizado com sucesso. Saldo restante: {conta.Saldo:C}");
+            _notificador.Notificar($"Saque de {dto.Valor:C} realizado com sucesso. Saldo restante: {conta.Saldo:C}");
 
             return Ok(new
             {
@@ -56,11 +57,8 @@ namespace BankingApi.Controllers
             });
         }
 
-
-
         [HttpPost("depositar")]
-
-        public IActionResult Depositar([FromBody] DepositarDTO dto)
+        public IActionResult Depositar([FromBody] ValorDTO dto)
         {
             var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
             var conta = new ContaBancaria("João Silva", 1000m, endereco);
@@ -72,21 +70,39 @@ namespace BankingApi.Controllers
                 mensagem = "Depósito realizado com sucesso!",
                 saldoAtual = conta.Saldo
             });
-
         }
 
         [HttpGet("ConsultarSaldo")]
-
         public IActionResult ConsultarSaldo()
         {
             var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
             var conta = new ContaBancaria("João Silva", 1000m, endereco);
             var saldo = conta.Saldo;
+            _notificador.Notificar($"Consulta de saldo realizada. Saldo atual: {conta.Saldo:C}");
 
             return Ok(new
             {
                 saldoAtual = saldo
             });
+        }
+
+        [HttpPost]
+        public IActionResult CriarConta([FromBody] ContaBancaria conta)
+        {
+            _context.Contas.Add(conta);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(ObterDetalhesConta), new { id = conta.ID }, conta);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(int id)
+        {
+            var conta = _context.Contas.Find(id);
+
+            if (conta == null)
+                return NotFound("Conta não encontrada.");
+
+            return Ok(conta);
         }
     }
 }

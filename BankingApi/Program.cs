@@ -1,5 +1,7 @@
+using BankingApi.Data;
 using BankingApi.Interfaces;
 using BankingApi.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,11 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<BancoDbContext>(options => options.UseSqlite("Data Source=banco.db"));
 // 2. REGISTRO DA INJEÇÃO DE DEPENDÊNCIA (DI):
 // Diz ao .NET que sempre que alguma classe pedir um "INotificador", 
 // ele deve entregar automaticamente uma instância de "NotificadorEmail".
 builder.Services.AddScoped<INotificador, NotificadorEmail>();
+
+
 
 var app = builder.Build();
 

@@ -1,6 +1,38 @@
 [
   {
     "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "CriarConta",
+    "RelativePath": "api/Conta",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "conta",
+        "Type": "BankingApi.Models.ContaBancaria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "ObterPorId",
+    "RelativePath": "api/Conta/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
     "Method": "ConsultarSaldo",
     "RelativePath": "api/Conta/ConsultarSaldo",
     "HttpMethod": "GET",
@@ -19,7 +51,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BankingApi.DTO.DepositarDTO",
+        "Type": "BankingApi.DTO.ValorDTO",
         "IsRequired": true
       }
     ],
@@ -44,9 +76,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "valor",
-        "Type": "System.Decimal",
-        "IsRequired": false
+        "Name": "dto",
+        "Type": "BankingApi.DTO.ValorDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
