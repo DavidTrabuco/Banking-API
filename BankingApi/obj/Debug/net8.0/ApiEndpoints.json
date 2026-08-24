@@ -1,6 +1,32 @@
 [
   {
     "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "ConsultarSaldo",
+    "RelativePath": "api/Conta/ConsultarSaldo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
+    "Method": "Depositar",
+    "RelativePath": "api/Conta/depositar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BankingApi.DTO.DepositarDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ContaController",
     "Method": "ObterDetalhesConta",
     "RelativePath": "api/Conta/detalhes",
     "HttpMethod": "GET",
@@ -19,7 +45,7 @@
     "Parameters": [
       {
         "Name": "valor",
-        "Type": "System.String",
+        "Type": "System.Decimal",
         "IsRequired": false
       }
     ],

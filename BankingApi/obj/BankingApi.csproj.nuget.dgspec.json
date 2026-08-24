@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\BankingApi.csproj": {}
+    "C:\\Users\\david\\Source\\Repos\\C-inicio\\BankingApi\\BankingApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\BankingApi.csproj": {
+    "C:\\Users\\david\\Source\\Repos\\C-inicio\\BankingApi\\BankingApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\BankingApi.csproj",
+        "projectUniqueName": "C:\\Users\\david\\Source\\Repos\\C-inicio\\BankingApi\\BankingApi.csproj",
         "projectName": "BankingApi",
-        "projectPath": "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\BankingApi.csproj",
-        "packagesPath": "C:\\Users\\david.santos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\obj\\",
+        "projectPath": "C:\\Users\\david\\Source\\Repos\\C-inicio\\BankingApi\\BankingApi.csproj",
+        "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\david\\Source\\Repos\\C-inicio\\BankingApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\david.santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

@@ -6,31 +6,31 @@ namespace BankingApi.Models
     {
 
         public string Titular { get; set; }
-        public string Saldo { get; private set; }
+        public decimal Saldo { get; private set; }
 
         public Endereco? EnderecoCobranca { get; set; }
 
 
-        public ContaBancaria(string titular, string saldo, Endereco? enderecoCobranca = null)
+        public ContaBancaria(string titular, decimal saldo, Endereco? enderecoCobranca = null)
         {
             Titular = titular;
             Saldo = saldo;
             EnderecoCobranca = enderecoCobranca;
         }
 
-        public void Depositar(string valor)
+        public void Depositar(decimal valor)
         {
             
-            Saldo = (decimal.Parse(Saldo) + decimal.Parse(valor)).ToString();
+            Saldo = (Saldo + valor);
         }
 
-        public bool Sacar(string valor)
+        public bool Sacar(decimal valor)
         {
-            if (decimal.Parse(valor) > decimal.Parse(Saldo))
+            if (valor > Saldo)
             {
                 return false;
             }
-            Saldo = (decimal.Parse(Saldo) - decimal.Parse(valor)).ToString();
+            Saldo = (Saldo - valor);
             return true;
         }
     }

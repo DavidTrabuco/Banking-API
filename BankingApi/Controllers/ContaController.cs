@@ -1,5 +1,6 @@
 ﻿using BankingApi.Interfaces;
 using BankingApi.Models;
+using BankingApi.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -21,7 +22,7 @@ namespace BankingApi.Controllers
         public IActionResult ObterDetalhesConta()
         {
             var endereco = new Endereco("Rua Exemplo", "Cidade Exemplo", "Estado Exemplo");
-            var conta = new ContaBancaria("João Silva", "1000.00", endereco);
+            var conta = new ContaBancaria("João Silva", 1000m, endereco);
             return Ok(new
             {
                 Titular = conta.Titular,
@@ -33,10 +34,10 @@ namespace BankingApi.Controllers
         }
 
         [HttpPost("sacar")]
-        public IActionResult Sacar([FromQuery] string valor)
+        public IActionResult Sacar([FromQuery] decimal valor)
         {
             var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
-            var conta = new ContaBancaria("João Silva", "1000", endereco);
+            var conta = new ContaBancaria("João Silva", 1000m, endereco);
 
             bool sucesso = conta.Sacar(valor);
 
@@ -55,5 +56,37 @@ namespace BankingApi.Controllers
             });
         }
 
+
+
+        [HttpPost("depositar")]
+
+        public IActionResult Depositar([FromBody] DepositarDTO dto)
+        {
+            var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
+            var conta = new ContaBancaria("João Silva", 1000m, endereco);
+            conta.Depositar(dto.Valor);
+
+            _notificador.Notificar($"Depósito de {dto.Valor:C} realizado com sucesso. Saldo atual: {conta.Saldo:C}");
+            return Ok(new
+            {
+                mensagem = "Depósito realizado com sucesso!",
+                saldoAtual = conta.Saldo
+            });
+
+        }
+
+        [HttpGet("ConsultarSaldo")]
+
+        public IActionResult ConsultarSaldo()
+        {
+            var endereco = new Endereco("Rua das Flores, 123", "São Paulo", "SP");
+            var conta = new ContaBancaria("João Silva", 1000m, endereco);
+            var saldo = conta.Saldo;
+
+            return Ok(new
+            {
+                saldoAtual = saldo
+            });
+        }
     }
 }
