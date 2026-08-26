@@ -22,4 +22,14 @@
         public int ContaDestinoId { get; set; }
         public decimal Valor { get; set; }
     }
+
+    public class ClienteDTO
+    {
+        public string Nome { get; set; } = string.Empty;
+
+        public string CPF { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+    }
 }

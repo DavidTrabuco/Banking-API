@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "BankingApi.Controllers.ClienteController",
+    "Method": "CadastrarCliente",
+    "RelativePath": "api/Cliente",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BankingApi.DTO.ClienteDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.ClienteController",
+    "Method": "ObterPorId",
+    "RelativePath": "api/Cliente/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BankingApi.Controllers.ContaController",
     "Method": "CriarConta",
     "RelativePath": "api/Conta",
@@ -64,9 +96,25 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "BankingApi.Controllers.ContaController",
+    "ContainingType": "BankingApi.Controllers.TransacaoController",
+    "Method": "ObterExtrato",
+    "RelativePath": "api/Transacao/{contaId}/extrato",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.TransacaoController",
     "Method": "Depositar",
-    "RelativePath": "api/Conta/depositar",
+    "RelativePath": "api/Transacao/depositar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -80,9 +128,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "BankingApi.Controllers.ContaController",
+    "ContainingType": "BankingApi.Controllers.TransacaoController",
     "Method": "Sacar",
-    "RelativePath": "api/Conta/sacar",
+    "RelativePath": "api/Transacao/sacar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -90,6 +138,22 @@
       {
         "Name": "dto",
         "Type": "BankingApi.DTO.TransacaoValorDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BankingApi.Controllers.TransacaoController",
+    "Method": "Transferir",
+    "RelativePath": "api/Transacao/transferir",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BankingApi.DTO.TransferenciaDTO",
         "IsRequired": true
       }
     ],
