@@ -3,23 +3,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankingApi.Data;
 
-// O garçom precisa herdar de 'DbContext' para aprender as funções de garçom do EF Core
 public class BancoDbContext : DbContext
 {
-    // O construtor recebe as opções de configuração (como qual banco usar)
-    public BancoDbContext(DbContextOptions<BancoDbContext> options) : base(options)
-    {
-    }
+    public BancoDbContext(DbContextOptions<BancoDbContext> options) : base(options) { }
 
-    // O DbSet é a "seção do cardápio/caderneta" que o garçom gerencia.
-    // Aqui dizemos que ele vai cuidar de uma tabela de 'ContaBancaria' chamada 'Contas'.
-    public DbSet<ContaBancaria> Contas { get; set; }
-
-
+    public DbSet<Cliente> Clientes => Set<Cliente>();
+    public DbSet<ContaBancaria> Contas => Set<ContaBancaria>();
+    public DbSet<CartaoCredito> Cartoes => Set<CartaoCredito>();
+    public DbSet<Transacao> Transacoes => Set<Transacao>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
+        // Mapeamento do Value Object (EnderecoCobranca) na ContaBancaria
         modelBuilder.Entity<ContaBancaria>()
-            .OwnsOne(c => c.EnderecoCobranca);
+            .OwnsOne(c => c.EnderecoCobranca, endereco =>
+            {
+                endereco.Property(e => e.Rua).HasColumnName("EnderecoCobranca_Rua");
+                endereco.Property(e => e.Cidade).HasColumnName("EnderecoCobranca_Cidade");
+                endereco.Property(e => e.Estado).HasColumnName("EnderecoCobranca_Estado");
+            });
+
+        // Relacionamento 1:N -> Cliente possui Varias Contas
+        modelBuilder.Entity<ContaBancaria>()
+            .HasOne(c => c.Cliente)
+            .WithMany(cl => cl.Contas)
+            .HasForeignKey(c => c.ClienteId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relacionamento 1:N -> Cliente possui Varios Cartoes
+        modelBuilder.Entity<CartaoCredito>()
+            .HasOne(c => c.Cliente)
+            .WithMany(cl => cl.Cartoes)
+            .HasForeignKey(c => c.ClienteId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relacionamento 1:N -> ContaBancaria possui Varias Transacoes
+        modelBuilder.Entity<Transacao>()
+            .HasOne(t => t.ContaBancaria)
+            .WithMany(c => c.Transacoes)
+            .HasForeignKey(t => t.ContaBancariaId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

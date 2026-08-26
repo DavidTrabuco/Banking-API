@@ -5,92 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Conta/detalhes": {
-      "get": {
-        "tags": [
-          "Conta"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Conta/sacar": {
-      "post": {
-        "tags": [
-          "Conta"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Conta/depositar": {
-      "post": {
-        "tags": [
-          "Conta"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ValorDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Conta/ConsultarSaldo": {
-      "get": {
-        "tags": [
-          "Conta"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Conta": {
       "post": {
         "tags": [
@@ -100,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContaBancaria"
+                "$ref": "#/components/schemas/CriarContaDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContaBancaria"
+                "$ref": "#/components/schemas/CriarContaDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContaBancaria"
+                "$ref": "#/components/schemas/CriarContaDTO"
               }
             }
           }
@@ -144,36 +58,133 @@
           }
         }
       }
+    },
+    "/api/Conta/{id}/detalhes": {
+      "get": {
+        "tags": [
+          "Conta"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Conta/sacar": {
+      "post": {
+        "tags": [
+          "Conta"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Conta/depositar": {
+      "post": {
+        "tags": [
+          "Conta"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransacaoValorDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Conta/{id}/saldo": {
+      "get": {
+        "tags": [
+          "Conta"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "ContaBancaria": {
+      "CriarContaDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "titular": {
             "type": "string",
             "nullable": true
           },
-          "saldo": {
+          "saldoInicial": {
             "type": "number",
-            "format": "double",
-            "readOnly": true
+            "format": "double"
           },
-          "enderecoCobranca": {
-            "$ref": "#/components/schemas/Endereco"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Endereco": {
-        "type": "object",
-        "properties": {
+          "clienteId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "rua": {
             "type": "string",
             "nullable": true
@@ -189,9 +200,13 @@
         },
         "additionalProperties": false
       },
-      "ValorDTO": {
+      "TransacaoValorDTO": {
         "type": "object",
         "properties": {
+          "contaId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "valor": {
             "type": "number",
             "format": "double"

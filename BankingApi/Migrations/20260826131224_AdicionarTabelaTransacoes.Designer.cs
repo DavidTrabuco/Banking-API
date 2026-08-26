@@ -3,6 +3,7 @@ using System;
 using BankingApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,49 +11,22 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingApi.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
-    partial class BancoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260826131224_AdicionarTabelaTransacoes")]
+    partial class AdicionarTabelaTransacoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.30");
 
-            modelBuilder.Entity("BankingApi.Models.CartaoCredito", b =>
+            modelBuilder.Entity("BankingApi.Models.Clientes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DiaVencimento")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("LimiteDisponivel")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("LimiteTotal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NumeroCartao")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("Cartoes");
-                });
-
-            modelBuilder.Entity("BankingApi.Models.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Cpf")
+                    b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -118,20 +92,9 @@ namespace BankingApi.Migrations
                     b.ToTable("Transacoes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.CartaoCredito", b =>
-                {
-                    b.HasOne("BankingApi.Models.Cliente", "Cliente")
-                        .WithMany("Cartoes")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
                 {
-                    b.HasOne("BankingApi.Models.Cliente", "Cliente")
+                    b.HasOne("BankingApi.Models.Clientes", "Cliente")
                         .WithMany("Contas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -144,18 +107,15 @@ namespace BankingApi.Migrations
 
                             b1.Property<string>("Cidade")
                                 .IsRequired()
-                                .HasColumnType("TEXT")
-                                .HasColumnName("EnderecoCobranca_Cidade");
+                                .HasColumnType("TEXT");
 
                             b1.Property<string>("Estado")
                                 .IsRequired()
-                                .HasColumnType("TEXT")
-                                .HasColumnName("EnderecoCobranca_Estado");
+                                .HasColumnType("TEXT");
 
                             b1.Property<string>("Rua")
                                 .IsRequired()
-                                .HasColumnType("TEXT")
-                                .HasColumnName("EnderecoCobranca_Rua");
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("ContaBancariaID");
 
@@ -167,14 +127,13 @@ namespace BankingApi.Migrations
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("EnderecoCobranca")
-                        .IsRequired();
+                    b.Navigation("EnderecoCobranca");
                 });
 
             modelBuilder.Entity("BankingApi.Models.Transacao", b =>
                 {
                     b.HasOne("BankingApi.Models.ContaBancaria", "ContaBancaria")
-                        .WithMany("Transacoes")
+                        .WithMany()
                         .HasForeignKey("ContaBancariaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -182,16 +141,9 @@ namespace BankingApi.Migrations
                     b.Navigation("ContaBancaria");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Cliente", b =>
+            modelBuilder.Entity("BankingApi.Models.Clientes", b =>
                 {
-                    b.Navigation("Cartoes");
-
                     b.Navigation("Contas");
-                });
-
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
-                {
-                    b.Navigation("Transacoes");
                 });
 #pragma warning restore 612, 618
         }

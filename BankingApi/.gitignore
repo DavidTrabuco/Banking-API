@@ -1,0 +1,10 @@
+﻿## Compilação e Binários
+bin/
+obj/
+.vs/
+*.user
+
+## Banco SQLite Local
+*.db
+*.db-shm
+*.db-wal
