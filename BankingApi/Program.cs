@@ -15,6 +15,8 @@ builder.Services.AddDbContext<BancoDbContext>(options => options.UseSqlite("Data
 // ele deve entregar automaticamente uma instância de "NotificadorEmail".
 builder.Services.AddScoped<INotificador, NotificadorEmail>();
 builder.Services.AddScoped<TransacaoServices>();
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<ContaService>();
 
 
 
