@@ -1,7 +1,6 @@
-﻿using BankingApi.Data;
-using BankingApi.DTO;
-using BankingApi.Interfaces;
+﻿using BankingApi.DTO;
 using BankingApi.Models;
+using BankingApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApi.Controllers
@@ -10,34 +9,40 @@ namespace BankingApi.Controllers
     [Route("api/[controller]")]
     public class ClienteController : ControllerBase
     {
-        private readonly INotificador _notificador;
-        private readonly BancoDbContext _context;
+        private readonly ClienteService _clienteService;
 
-        public ClienteController(INotificador notificador, BancoDbContext context)
+        public ClienteController(ClienteService clienteService)
         {
-            _notificador = notificador;
-            _context = context;
+            _clienteService = clienteService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CadastrarCliente([FromBody] ClienteDTO dto)
         {
+           
             var cliente = new Cliente(dto.Nome, dto.CPF, dto.Email);
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
 
-            _notificador.Notificar($"Cliente {cliente.Nome} cadastrado com sucesso.");
+            
+            bool sucesso = await _clienteService.CriarClienteAsync(cliente);
 
+            if (!sucesso)
+            {
+                return BadRequest(new { mensagem = "Falha ao cadastrar cliente (CPF duplicado)." });
+            }
+
+            
             return CreatedAtAction(nameof(ObterPorId), new { id = cliente.Id }, cliente);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> ObterPorId(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _clienteService.ObterPorIdAsync(id);
 
             if (cliente == null)
+            {
                 return NotFound(new { mensagem = "Cliente não encontrado." });
+            }
 
             return Ok(cliente);
         }
