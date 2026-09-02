@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Class.cs" />
+    <Compile Remove="Api\Controllers\Class.cs" />
   </ItemGroup>
 
   <ItemGroup>

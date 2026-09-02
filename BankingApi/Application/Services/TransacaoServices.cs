@@ -1,4 +1,4 @@
-﻿using BankingApi.Data;
+﻿using BankingApi.Infrastructure.Data;
 using BankingApi.Models;
 using Microsoft.EntityFrameworkCore;
 

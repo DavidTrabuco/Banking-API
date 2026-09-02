@@ -1,6 +1,6 @@
-﻿using BankingApi.DTO;
+﻿using BankingApi.Application.DTO;
+using BankingApi.Infrastructure.Services;
 using BankingApi.Models;
-using BankingApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApi.Controllers

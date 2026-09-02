@@ -1,4 +1,4 @@
-﻿using BankingApi.Interfaces;
+﻿using BankingApi.Domain.Interfaces;
 
 namespace BankingApi.Services;
 

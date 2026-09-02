@@ -1,5 +1,5 @@
-﻿using BankingApi.Data;
-using BankingApi.Models;
+﻿using BankingApi.Domain.Models;
+using BankingApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankingApi.Services

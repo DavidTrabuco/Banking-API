@@ -1,4 +1,4 @@
-﻿namespace BankingApi.Models;
+﻿namespace BankingApi.Domain.Models;
 
 public class Transacao
 {
