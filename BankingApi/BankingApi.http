@@ -1,6 +1,61 @@
-@BankingApi_HostAddress = http://localhost:5043
+@host = http://localhost:5043
 
-GET {{BankingApi_HostAddress}}/weatherforecast/
-Accept: application/json
+### 1. Cadastrar cliente
+POST {{host}}/api/cliente
+Content-Type: application/json
 
-###
+{
+  "nome": "David Trabuco",
+  "cpf": "12345678901",
+  "email": "david@exemplo.com"
+}
+
+### 2. Buscar cliente por id
+GET {{host}}/api/cliente/1
+
+### 3. Criar conta bancaria
+POST {{host}}/api/conta
+Content-Type: application/json
+
+{
+  "titular": "David Trabuco",
+  "saldoInicial": 1000,
+  "clienteId": 1,
+  "rua": "Rua das Flores, 100",
+  "cidade": "Sao Paulo",
+  "estado": "SP"
+}
+
+### 4. Buscar conta por id
+GET {{host}}/api/conta/1
+
+### 5. Depositar
+POST {{host}}/api/transacao/depositar
+Content-Type: application/json
+
+{
+  "contaId": 1,
+  "valor": 250
+}
+
+### 6. Sacar
+POST {{host}}/api/transacao/sacar
+Content-Type: application/json
+
+{
+  "contaId": 1,
+  "valor": 100
+}
+
+### 7. Transferir
+POST {{host}}/api/transacao/transferir
+Content-Type: application/json
+
+{
+  "contaOrigemId": 1,
+  "contaDestinoId": 2,
+  "valor": 50
+}
+
+### 8. Extrato da conta
+GET {{host}}/api/transacao/1/extrato

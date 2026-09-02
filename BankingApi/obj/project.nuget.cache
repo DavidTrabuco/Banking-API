@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6lLLDuFCVHI=",
+  "dgSpecHash": "4FWHtcupKsw=",
   "success": true,
   "projectFilePath": "C:\\Users\\david.santos\\source\\repos\\BankingApi\\BankingApi\\BankingApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\david.santos\\.nuget\\packages\\dapper\\2.1.79\\dapper.2.1.79.nupkg.sha512",
     "C:\\Users\\david.santos\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\david.santos\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\david.santos\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

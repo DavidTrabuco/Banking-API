@@ -1,1 +1,21 @@
-.vs/ 
+# Build
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+
+# Banco de dados local (SQLite)
+*.db
+*.db-shm
+*.db-wal
+
+# Segredos: NUNCA versionar connection string de producao
+appsettings.Production.json
+appsettings.*.local.json

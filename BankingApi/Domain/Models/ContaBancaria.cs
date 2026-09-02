@@ -1,4 +1,4 @@
-﻿namespace BankingApi.Domain.Models;
+namespace BankingApi.Domain.Models;
 
 public class ContaBancaria
 {
@@ -14,7 +14,6 @@ public class ContaBancaria
 
     protected ContaBancaria() { }
 
-    
     public ContaBancaria(string titular, decimal saldoInicial, Endereco endereco, int clienteId)
     {
         Titular = titular;
@@ -23,6 +22,17 @@ public class ContaBancaria
         ClienteId = clienteId;
     }
 
+    /// <summary>
+    /// Reconstrói uma conta já existente a partir das linhas do banco.
+    /// O Dapper não consegue montar sozinho o objeto aninhado EnderecoCobranca,
+    /// então o repositório usa esta fábrica em vez de mexer nos setters privados.
+    /// </summary>
+    public static ContaBancaria Restaurar(int id, string titular, decimal saldo, Endereco endereco, int clienteId)
+        => new(titular, saldo, endereco, clienteId) { ID = id };
+
+    /// <summary>Define o Id devolvido pelo banco logo após o INSERT.</summary>
+    public void DefinirId(int id) => ID = id;
+
     public bool Sacar(decimal valor)
     {
         if (valor <= 0 || valor > Saldo) return false;
@@ -30,7 +40,6 @@ public class ContaBancaria
         return true;
     }
 
-    
     public bool Depositar(decimal valor)
     {
         if (valor <= 0) return false;

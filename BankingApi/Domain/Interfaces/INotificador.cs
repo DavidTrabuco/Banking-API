@@ -1,10 +1,8 @@
-﻿namespace BankingApi.Domain.Interfaces
-{
-    public interface INotificador
+namespace BankingApi.Domain.Interfaces;
 
-    //Interface seria um contrato que diz o que ele vai fazer , mas não diz como ele vai fazer
-    //Ou seja uma assinatura do contrato 
-    {
-        void Notificar(string mensagem);
-    }
+// Interface é um contrato: diz O QUE vai ser feito, mas não COMO.
+// Quem implementa (NotificadorEmail) fica na camada de Infrastructure.
+public interface INotificador
+{
+    void Notificar(string mensagem);
 }
