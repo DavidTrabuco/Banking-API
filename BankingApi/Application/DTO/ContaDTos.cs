@@ -1,4 +1,4 @@
-﻿namespace BankingApi.DTO
+﻿namespace BankingApi.Application.DTO
 {
     public class CriarContaDTO
     {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BankingApi.Migrations
+namespace BankingApi.Infrastructure.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
     [Migration("20260824174646_CriacaoInicial")]
@@ -19,7 +19,7 @@ namespace BankingApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.30");
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -37,9 +37,9 @@ namespace BankingApi.Migrations
                     b.ToTable("Contas");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
-                    b.OwnsOne("BankingApi.Models.Endereco", "EnderecoCobranca", b1 =>
+                    b.OwnsOne("BankingApi.Domain.Models.Endereco", "EnderecoCobranca", b1 =>
                         {
                             b1.Property<int>("ContaBancariaID")
                                 .HasColumnType("INTEGER");

@@ -2,7 +2,7 @@
 using BankingApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankingApi.Services
+namespace BankingApi.Application.Services
 {
     public class ContaService
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BankingApi.Migrations
+namespace BankingApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class AdicionarTabelaTransacoes : Migration

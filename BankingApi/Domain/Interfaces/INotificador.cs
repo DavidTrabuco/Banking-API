@@ -1,4 +1,4 @@
-﻿namespace BankingApi.Interfaces
+﻿namespace BankingApi.Domain.Interfaces
 {
     public interface INotificador
 

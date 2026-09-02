@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BankingApi.Migrations
+namespace BankingApi.Infrastructure.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
     partial class BancoDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace BankingApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.30");
 
-            modelBuilder.Entity("BankingApi.Models.CartaoCredito", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.CartaoCredito", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace BankingApi.Migrations
                     b.ToTable("Cartoes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Cliente", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Cliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace BankingApi.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace BankingApi.Migrations
                     b.ToTable("Contas");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Transacao", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Transacao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,9 +118,9 @@ namespace BankingApi.Migrations
                     b.ToTable("Transacoes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.CartaoCredito", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.CartaoCredito", b =>
                 {
-                    b.HasOne("BankingApi.Models.Cliente", "Cliente")
+                    b.HasOne("BankingApi.Domain.Models.Cliente", "Cliente")
                         .WithMany("Cartoes")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -129,15 +129,15 @@ namespace BankingApi.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
-                    b.HasOne("BankingApi.Models.Cliente", "Cliente")
+                    b.HasOne("BankingApi.Domain.Models.Cliente", "Cliente")
                         .WithMany("Contas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("BankingApi.Models.Endereco", "EnderecoCobranca", b1 =>
+                    b.OwnsOne("BankingApi.Domain.Models.Endereco", "EnderecoCobranca", b1 =>
                         {
                             b1.Property<int>("ContaBancariaID")
                                 .HasColumnType("INTEGER");
@@ -171,9 +171,9 @@ namespace BankingApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Transacao", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Transacao", b =>
                 {
-                    b.HasOne("BankingApi.Models.ContaBancaria", "ContaBancaria")
+                    b.HasOne("BankingApi.Domain.Models.ContaBancaria", "ContaBancaria")
                         .WithMany("Transacoes")
                         .HasForeignKey("ContaBancariaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -182,14 +182,14 @@ namespace BankingApi.Migrations
                     b.Navigation("ContaBancaria");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Cliente", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Cliente", b =>
                 {
                     b.Navigation("Cartoes");
 
                     b.Navigation("Contas");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
                     b.Navigation("Transacoes");
                 });

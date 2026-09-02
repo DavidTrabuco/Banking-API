@@ -1,8 +1,8 @@
 ﻿using BankingApi.Infrastructure.Data;
-using BankingApi.Models;
+using BankingApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankingApi.Services;
+namespace BankingApi.Application.Services;
 
 public class TransacaoServices
 {

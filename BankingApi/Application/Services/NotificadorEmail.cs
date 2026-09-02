@@ -1,6 +1,6 @@
 ﻿using BankingApi.Domain.Interfaces;
 
-namespace BankingApi.Services;
+namespace BankingApi.Application.Services;
 
 // A camada de Service isola regras de infraestrutura e serviços externos.
 // Esta classe implementa o contrato 'INotificador', garantindo baixo acoplamento.

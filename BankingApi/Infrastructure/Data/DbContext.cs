@@ -1,7 +1,7 @@
 ﻿using BankingApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankingApi.Data;
+namespace BankingApi.Infrastructure.Data;
 
 public class BancoDbContext : DbContext
 {

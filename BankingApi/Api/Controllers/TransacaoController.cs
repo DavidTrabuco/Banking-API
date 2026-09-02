@@ -1,12 +1,12 @@
-﻿using BankingApi.DTO;
-using BankingApi.Models;
+﻿using BankingApi.Application.DTO;
+using BankingApi.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BankingApi.Domain.Interfaces;
 using BankingApi.Infrastructure.Data;
-using BankingApi.Infrastructure.Services;
+using BankingApi.Application.Services;
 
-namespace BankingApi.Controllers
+namespace BankingApi.Api.Controllers
 {
 
     [ApiController]

@@ -1,4 +1,3 @@
-﻿using System.Reflection.Metadata;
 
 namespace BankingApi.Domain.Models
 {
@@ -6,9 +5,9 @@ namespace BankingApi.Domain.Models
     public class Endereco
     {
         
-        public string Rua { get; set; }
-        public string Cidade { get; set; }
-        public string Estado { get; set; }
+        public string Rua { get; set; } = string.Empty;
+        public string Cidade { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
 
        
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BankingApi.Migrations
+namespace BankingApi.Infrastructure.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
     [Migration("20260826131224_AdicionarTabelaTransacoes")]
@@ -20,7 +20,7 @@ namespace BankingApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.30");
 
-            modelBuilder.Entity("BankingApi.Models.Clientes", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Clientes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace BankingApi.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace BankingApi.Migrations
                     b.ToTable("Contas");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Transacao", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Transacao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,15 +92,15 @@ namespace BankingApi.Migrations
                     b.ToTable("Transacoes");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.ContaBancaria", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.ContaBancaria", b =>
                 {
-                    b.HasOne("BankingApi.Models.Clientes", "Cliente")
+                    b.HasOne("BankingApi.Domain.Models.Clientes", "Cliente")
                         .WithMany("Contas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("BankingApi.Models.Endereco", "EnderecoCobranca", b1 =>
+                    b.OwnsOne("BankingApi.Domain.Models.Endereco", "EnderecoCobranca", b1 =>
                         {
                             b1.Property<int>("ContaBancariaID")
                                 .HasColumnType("INTEGER");
@@ -130,9 +130,9 @@ namespace BankingApi.Migrations
                     b.Navigation("EnderecoCobranca");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Transacao", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Transacao", b =>
                 {
-                    b.HasOne("BankingApi.Models.ContaBancaria", "ContaBancaria")
+                    b.HasOne("BankingApi.Domain.Models.ContaBancaria", "ContaBancaria")
                         .WithMany()
                         .HasForeignKey("ContaBancariaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,7 +141,7 @@ namespace BankingApi.Migrations
                     b.Navigation("ContaBancaria");
                 });
 
-            modelBuilder.Entity("BankingApi.Models.Clientes", b =>
+            modelBuilder.Entity("BankingApi.Domain.Models.Clientes", b =>
                 {
                     b.Navigation("Contas");
                 });

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BankingApi.Migrations
+namespace BankingApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class AdicionarTabelaClientes : Migration

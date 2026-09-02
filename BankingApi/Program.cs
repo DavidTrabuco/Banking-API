@@ -1,6 +1,6 @@
 using BankingApi.Domain.Interfaces;
 using BankingApi.Infrastructure.Data;
-using BankingApi.Infrastructure.Services;
+using BankingApi.Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

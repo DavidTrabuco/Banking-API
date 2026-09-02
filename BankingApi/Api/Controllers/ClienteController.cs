@@ -1,9 +1,9 @@
-﻿using BankingApi.DTO;
-using BankingApi.Infrastructure.Services;
-using BankingApi.Models;
+﻿using BankingApi.Application.DTO;
+using BankingApi.Application.Services;
+using BankingApi.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BankingApi.Controllers
+namespace BankingApi.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
