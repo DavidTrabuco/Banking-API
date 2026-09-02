@@ -34,7 +34,6 @@ C:\Users\david\Source\Repos\C-inicio\BankingApi\obj\Debug\net8.0\refint\BankingA
 C:\Users\david\Source\Repos\C-inicio\BankingApi\obj\Debug\net8.0\BankingApi.pdb
 C:\Users\david\Source\Repos\C-inicio\BankingApi\obj\Debug\net8.0\BankingApi.genruntimeconfig.cache
 C:\Users\david\Source\Repos\C-inicio\BankingApi\obj\Debug\net8.0\ref\BankingApi.dll
-C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\appsettings.json
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\BankingApi.staticwebassets.endpoints.json
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\BankingApi.exe
@@ -172,4 +171,5 @@ C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\runtim
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
-C:\Users\david.santos\source\repos\BankingApi\BankingApi\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\david.santos\source\repos\BankingApi\BankingApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\david.santos\source\repos\BankingApi\BankingApi\bin\Debug\net8.0\appsettings.Development.json

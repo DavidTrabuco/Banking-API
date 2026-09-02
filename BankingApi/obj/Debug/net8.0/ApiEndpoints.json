@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BankingApi.DTO.ClienteDTO",
+        "Type": "ClienteDTO",
         "IsRequired": true
       }
     ],
@@ -64,38 +64,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "BankingApi.Controllers.ContaController",
-    "Method": "ObterDetalhesConta",
-    "RelativePath": "api/Conta/{id}/detalhes",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BankingApi.Controllers.ContaController",
-    "Method": "ConsultarSaldo",
-    "RelativePath": "api/Conta/{id}/saldo",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "BankingApi.Controllers.TransacaoController",
     "Method": "ObterExtrato",
     "RelativePath": "api/Transacao/{contaId}/extrato",
@@ -121,7 +89,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BankingApi.DTO.TransacaoValorDTO",
+        "Type": "TransacaoValorDTO",
         "IsRequired": true
       }
     ],
@@ -137,7 +105,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BankingApi.DTO.TransacaoValorDTO",
+        "Type": "TransacaoValorDTO",
         "IsRequired": true
       }
     ],
@@ -153,7 +121,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BankingApi.DTO.TransferenciaDTO",
+        "Type": "TransferenciaDTO",
         "IsRequired": true
       }
     ],
