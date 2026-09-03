@@ -17,22 +17,19 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ClienteResponseDTO), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CadastrarCliente([FromBody] ClienteDTO dto)
     {
         var cliente = new Cliente(dto.Nome, dto.Cpf, dto.Email);
 
-        // Se o CPF ja existir, o Service lanca DominioException e o
-        // ExceptionMiddleware devolve 400 automaticamente.
-        await _clienteService.CriarClienteAsync(cliente);
+        bool sucesso = await _clienteService.CriarClienteAsync(cliente);
+
+        if (!sucesso)
+            return BadRequest(new { mensagem = "Falha ao cadastrar cliente (CPF duplicado)." });
 
         return CreatedAtAction(nameof(ObterPorId), new { id = cliente.Id }, Mapear(cliente));
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(typeof(ClienteResponseDTO), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorId(int id)
     {
         var cliente = await _clienteService.ObterPorIdAsync(id);

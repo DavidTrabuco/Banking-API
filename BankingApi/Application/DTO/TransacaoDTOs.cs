@@ -23,8 +23,8 @@ public class TransferenciaDTO
     public decimal Valor { get; set; }
 }
 
-/// <summary>Uma linha do extrato. Evita serializar a entidade Transacao inteira
-/// (que carrega a navegação ContaBancaria e geraria referência circular no JSON).</summary>
+// Uma linha do extrato. Não devolvemos a entidade Transacao direto porque ela
+// carrega a navegação ContaBancaria, o que geraria referência circular no JSON.
 public class TransacaoResponseDTO
 {
     public int Id { get; set; }

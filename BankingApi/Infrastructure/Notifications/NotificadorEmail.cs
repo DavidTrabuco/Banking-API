@@ -2,11 +2,8 @@ using BankingApi.Domain.Interfaces;
 
 namespace BankingApi.Infrastructure.Notifications;
 
-/// <summary>
-/// Implementação do contrato INotificador. Envio de e-mail é um detalhe de
-/// infraestrutura, por isso mora aqui e não na camada Application — assim o
-/// Service depende só da interface (baixo acoplamento).
-/// </summary>
+// Envio de e-mail é detalhe de infraestrutura, por isso mora aqui e não em Application.
+// O Service depende só da interface INotificador.
 public class NotificadorEmail : INotificador
 {
     private readonly ILogger<NotificadorEmail> _logger;

@@ -6,6 +6,6 @@ public interface ITransacaoRepository
 {
     Task AdicionarAsync(Transacao transacao);
 
-    /// <summary>Extrato: todos os lançamentos da conta, do mais recente para o mais antigo.</summary>
+    // Extrato: do lançamento mais recente para o mais antigo.
     Task<IEnumerable<Transacao>> ObterPorContaIdAsync(int contaId);
 }

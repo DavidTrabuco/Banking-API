@@ -19,6 +19,6 @@ public class Cliente
         Email = email;
     }
 
-    /// <summary>Define o Id devolvido pelo banco logo após o INSERT.</summary>
+    // Chamado pelo Service logo após o INSERT.
     public void DefinirId(int id) => Id = id;
 }

@@ -18,39 +18,46 @@ public class TransacaoController : ControllerBase
     }
 
     [HttpPost("depositar")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Depositar([FromBody] TransacaoValorDTO dto)
     {
-        await _transacaoService.DepositarAsync(dto.ContaId, dto.Valor);
+        bool sucesso = await _transacaoService.DepositarAsync(dto.ContaId, dto.Valor);
+
+        if (!sucesso)
+            return BadRequest(new { mensagem = "Valor de depósito inválido ou conta não encontrada." });
+
         return Ok(new { mensagem = "Depósito realizado com sucesso!" });
     }
 
     [HttpPost("sacar")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Sacar([FromBody] TransacaoValorDTO dto)
     {
-        await _transacaoService.SacarAsync(dto.ContaId, dto.Valor);
+        bool sucesso = await _transacaoService.SacarAsync(dto.ContaId, dto.Valor);
+
+        if (!sucesso)
+            return BadRequest(new { mensagem = "Não foi possível realizar o saque. Verifique a conta e o saldo." });
+
         return Ok(new { mensagem = "Saque realizado com sucesso!" });
     }
 
     [HttpPost("transferir")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Transferir([FromBody] TransferenciaDTO dto)
     {
-        await _transacaoService.TransferirAsync(dto.ContaOrigemId, dto.ContaDestinoId, dto.Valor);
+        bool sucesso = await _transacaoService.TransferirAsync(dto.ContaOrigemId, dto.ContaDestinoId, dto.Valor);
+
+        if (!sucesso)
+            return BadRequest(new { mensagem = "Falha na transferência. Verifique os dados das contas e o saldo." });
+
         return Ok(new { mensagem = "Transferência realizada com sucesso!" });
     }
 
     // Extrato da conta: GET /api/transacao/{contaId}/extrato
     [HttpGet("{contaId:int}/extrato")]
-    [ProducesResponseType(typeof(IEnumerable<TransacaoResponseDTO>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ObterExtrato(int contaId)
     {
         var lancamentos = await _transacaoService.ObterExtratoAsync(contaId);
+
+        if (lancamentos is null)
+            return NotFound(new { mensagem = "Conta bancária não encontrada." });
 
         return Ok(lancamentos.Select(Mapear));
     }

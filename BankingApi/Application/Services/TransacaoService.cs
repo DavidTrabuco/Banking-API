@@ -1,4 +1,3 @@
-using BankingApi.Domain.Exceptions;
 using BankingApi.Domain.Interfaces;
 using BankingApi.Domain.Models;
 
@@ -20,36 +19,37 @@ public class TransacaoService
         _notificador = notificador;
     }
 
-    public async Task DepositarAsync(int contaId, decimal valor)
+    public async Task<bool> DepositarAsync(int contaId, decimal valor)
     {
         // 1. Movimenta o saldo da conta
-        await _contaRepository.DepositarAsync(contaId, valor);
+        if (!await _contaRepository.DepositarAsync(contaId, valor)) return false;
 
         // 2. Grava o lançamento no extrato
         await _transacaoRepository.AdicionarAsync(new Transacao(valor, "Deposito", contaId));
 
         _notificador.Notificar($"Depósito de {valor:C} realizado na conta {contaId}.");
+        return true;
     }
 
-    public async Task SacarAsync(int contaId, decimal valor)
+    public async Task<bool> SacarAsync(int contaId, decimal valor)
     {
         // 1. Movimenta o saldo da conta
-        await _contaRepository.SacarAsync(contaId, valor);
+        if (!await _contaRepository.SacarAsync(contaId, valor)) return false;
 
         // 2. Grava o lançamento no extrato
         await _transacaoRepository.AdicionarAsync(new Transacao(valor, "Saque", contaId));
 
         _notificador.Notificar($"Saque de {valor:C} realizado na conta {contaId}.");
+        return true;
     }
 
-    public async Task TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor)
+    public async Task<bool> TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor)
     {
-        if (contaOrigemId == contaDestinoId)
-            throw new DominioException("A conta de origem e a de destino não podem ser a mesma.");
+        if (contaOrigemId == contaDestinoId) return false;
 
         // 1. Saque na origem e depósito no destino
-        await _contaRepository.SacarAsync(contaOrigemId, valor);
-        await _contaRepository.DepositarAsync(contaDestinoId, valor);
+        if (!await _contaRepository.SacarAsync(contaOrigemId, valor)) return false;
+        if (!await _contaRepository.DepositarAsync(contaDestinoId, valor)) return false;
 
         // 2. Registra os dois lados no extrato
         await _transacaoRepository.AdicionarAsync(
@@ -59,14 +59,13 @@ public class TransacaoService
 
         _notificador.Notificar(
             $"Transferência de {valor:C} da conta {contaOrigemId} para a conta {contaDestinoId}.");
+        return true;
     }
 
-    /// <summary>Extrato da conta: todos os lançamentos, do mais recente para o mais antigo.</summary>
-    /// <exception cref="DominioException">Quando a conta não existe.</exception>
-    public async Task<IReadOnlyList<Transacao>> ObterExtratoAsync(int contaId)
+    // Do lançamento mais recente para o mais antigo. Devolve null se a conta não existir.
+    public async Task<IReadOnlyList<Transacao>?> ObterExtratoAsync(int contaId)
     {
-        if (!await _contaRepository.ExisteAsync(contaId))
-            throw new DominioException($"Conta {contaId} não encontrada.");
+        if (!await _contaRepository.ExisteAsync(contaId)) return null;
 
         var lancamentos = (await _transacaoRepository.ObterPorContaIdAsync(contaId)).ToList();
 
