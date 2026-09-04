@@ -28,4 +28,21 @@ public class UsuarioRepository : IUsuarioRepository
 
         return await _connection.QueryFirstOrDefaultAsync<Usuario>(sql, new { Email = email });
     }
+
+
+    public async Task<Usuario?> RegistrarAsync(Usuario usuario)
+    {
+        const string sql = @"
+            INSERT INTO Usuarios (Email, SenhaHash, ClienteId) 
+            VALUES (@Email, @SenhaHash, @ClienteId);
+            SELECT last_insert_rowid();";
+        var id = await _connection.QuerySingleAsync<int>(sql, new
+        {
+            Email = usuario.Email,
+            SenhaHash = usuario.SenhaHash,
+            ClienteId = usuario.ClienteId
+        });
+        usuario.Id = id;
+        return usuario;
+    }
 }

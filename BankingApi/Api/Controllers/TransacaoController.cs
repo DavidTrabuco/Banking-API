@@ -1,12 +1,14 @@
 using BankingApi.Application.DTO;
 using BankingApi.Application.Services;
 using BankingApi.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApi.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TransacaoController : ControllerBase
 {
     // O Controller conhece APENAS o Service. Nada de DbContext ou SQL aqui.
@@ -54,12 +56,33 @@ public class TransacaoController : ControllerBase
     [HttpGet("{contaId:int}/extrato")]
     public async Task<IActionResult> ObterExtrato(int contaId)
     {
-        var lancamentos = await _transacaoService.ObterExtratoAsync(contaId);
+        var clienteId = ObterClienteIdDoToken();
 
-        if (lancamentos is null)
-            return NotFound(new { mensagem = "Conta bancária não encontrada." });
+        if (clienteId is null)
+            return Unauthorized(new { mensagem = "Token sem a claim ClienteId." });
 
-        return Ok(lancamentos.Select(Mapear));
+        var (status, lancamentos) = await _transacaoService.ObterExtratoAsync(contaId, clienteId.Value);
+
+        // 403 (e não 404) quando a conta existe mas é de outro cliente: o usuário
+        // precisa saber que o problema é permissão, não um id inexistente.
+        return status switch
+        {
+            ResultadoExtrato.ContaNaoEncontrada =>
+                NotFound(new { mensagem = "Conta bancária não encontrada." }),
+
+            ResultadoExtrato.AcessoNegado =>
+                StatusCode(StatusCodes.Status403Forbidden,
+                    new { mensagem = "Esta conta não pertence ao usuário autenticado." }),
+
+            _ => Ok(lancamentos.Select(Mapear))
+        };
+    }
+
+    // O TokenService grava a claim "ClienteId" no JWT emitido no login.
+    private int? ObterClienteIdDoToken()
+    {
+        var valor = User.FindFirst("ClienteId")?.Value;
+        return int.TryParse(valor, out var id) ? id : null;
     }
 
     private static TransacaoResponseDTO Mapear(Transacao transacao) => new()

@@ -3,6 +3,7 @@ using System;
 using BankingApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingApi.Infrastructure.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
-    partial class BancoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260904111727_AddTabelaUsuarios")]
+    partial class AddTabelaUsuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.30");
@@ -140,6 +143,10 @@ namespace BankingApi.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

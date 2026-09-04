@@ -43,7 +43,58 @@ public class AuthController : ControllerBase
         // 3. Gera o Token JWT real com as Claims do usuário achado no banco
         var token = _tokenService.GetToken(usuario);
 
-        // 4. Retorna a resposta com o Token
-        return Ok(new LoginResponseDTO(token));
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,                  // Impede leitura via JavaScript (XSS)
+            Secure = true,                    // Exige HTTPS
+            SameSite = SameSiteMode.None,     // Permite requisições entre origens (ex: React 5173 e API 5043)
+            Expires = DateTime.UtcNow.AddHours(8)
+        };
+
+        // 4. Grava o cookie "jwtToken" no cabeçalho da resposta HTTP
+        Response.Cookies.Append("jwtToken", token, cookieOptions);
+
+        // 5. Retorna 200 OK (não precisa mais enviar o token no corpo do JSON!)
+        return Ok(new { mensagem = "Login realizado com sucesso!" });
+    }
+
+
+
+    [HttpPost("registrar")]
+    [AllowAnonymous]
+
+    public async Task<IActionResult> Registrar([FromBody] RegistroRequestDTO dto)
+    {
+        // 1. Verifica se o e-mail já está registrado
+        var usuarioExistente = await _usuarioRepository.ObterPorEmailAsync(dto.Email);
+        if (usuarioExistente != null)
+        {
+            return BadRequest(new { mensagem = "E-mail já registrado." });
+        }
+        // 2. Cria um novo usuário com a senha hash
+        var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.SenhaHash);
+        var novoUsuario = new Domain.Models.Usuario
+        {
+            Email = dto.Email,
+            SenhaHash = senhaHash,
+            ClienteId = dto.ClienteId
+        };
+        // 3. Salva o usuário no banco
+        var usuarioRegistrado = await _usuarioRepository.RegistrarAsync(novoUsuario);
+
+        // RegistrarAsync devolve Usuario? -- sem esta guarda o acesso abaixo
+        // dispara CS8602 (possível referência nula).
+        if (usuarioRegistrado is null)
+            return BadRequest(new { mensagem = "Não foi possível registrar o usuário." });
+
+        // 4. Retorna a resposta com os dados do usuário registrado (sem a senha).
+        //    Nao usamos CreatedAtAction: a action Login e um POST sem parametro {id}
+        //    na rota, entao o ASP.NET nao consegue gerar o header Location e lanca.
+        return Ok(new
+        {
+            usuarioRegistrado.Id,
+            usuarioRegistrado.Email,
+            usuarioRegistrado.ClienteId
+        });
     }
 }

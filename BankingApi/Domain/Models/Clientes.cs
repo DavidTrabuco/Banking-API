@@ -7,8 +7,10 @@ public class Cliente
     public string Cpf { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
 
+    public Usuario? Usuario { get; private set; }
     public ICollection<ContaBancaria> Contas { get; private set; } = new List<ContaBancaria>();
     public ICollection<CartaoCredito> Cartoes { get; private set; } = new List<CartaoCredito>();
+
 
     protected Cliente() { }
 

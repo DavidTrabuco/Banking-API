@@ -12,6 +12,8 @@ public class BancoDbContext : DbContext
     public DbSet<CartaoCredito> Cartoes => Set<CartaoCredito>();
     public DbSet<Transacao> Transacoes => Set<Transacao>();
 
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -36,5 +38,13 @@ public class BancoDbContext : DbContext
             .WithMany(c => c.Transacoes)
             .HasForeignKey(t => t.ContaBancariaId)
             .OnDelete(DeleteBehavior.Cascade);
+        //Relacionamento 1:1 -> Usuario possui 1 Cliente
+        modelBuilder.Entity<Usuario>()
+            .HasOne(u => u.Cliente)
+            .WithOne(c => c.Usuario)
+            .HasForeignKey<Usuario>(u => u.ClienteId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
     }
 }

@@ -3,6 +3,13 @@ using BankingApi.Domain.Models;
 
 namespace BankingApi.Application.Services;
 
+public enum ResultadoExtrato
+{
+    Ok,
+    ContaNaoEncontrada,
+    AcessoNegado
+}
+
 public class TransacaoService
 {
     private readonly IContaRepository _contaRepository;
@@ -62,16 +69,25 @@ public class TransacaoService
         return true;
     }
 
-    // Do lançamento mais recente para o mais antigo. Devolve null se a conta não existir.
-    public async Task<IReadOnlyList<Transacao>?> ObterExtratoAsync(int contaId)
+    // Regra de negócio: o extrato só pode ser lido pelo cliente dono da conta.
+    // Do lançamento mais recente para o mais antigo.
+    public async Task<(ResultadoExtrato Status, IReadOnlyList<Transacao> Lancamentos)> ObterExtratoAsync(
+        int contaId, int clienteId)
     {
-        if (!await _contaRepository.ExisteAsync(contaId)) return null;
+        // Carregamos a conta (e não só ExisteAsync) porque precisamos do dono dela.
+        var conta = await _contaRepository.ObterPorIdAsync(contaId);
+
+        if (conta is null)
+            return (ResultadoExtrato.ContaNaoEncontrada, Array.Empty<Transacao>());
+
+        if (conta.ClienteId != clienteId)
+            return (ResultadoExtrato.AcessoNegado, Array.Empty<Transacao>());
 
         var lancamentos = (await _transacaoRepository.ObterPorContaIdAsync(contaId)).ToList();
 
         _notificador.Notificar(
             $"Extrato gerado para a conta {contaId}. Total de lançamentos: {lancamentos.Count}.");
 
-        return lancamentos;
+        return (ResultadoExtrato.Ok, lancamentos);
     }
 }
